@@ -1,10 +1,43 @@
 #!perl -w
+# $Id$
 use strict;
-use Test::More tests => 4;
+use Test::More tests => 22;
 
 BEGIN { use_ok("Number::Compare") };
 
-my $gt_20 = Number::Compare->new('>20');
-ok(  $gt_20->test(21), ">20" );
-ok( !$gt_20->test(20) );
-ok( !$gt_20->test(19) );
+my $c = Number::Compare->new('>20');
+ok(  $c->test(21), ">20" );
+ok( !$c->test(20) );
+ok( !$c->test(19) );
+
+$c = Number::Compare->new('<20');
+ok( !$c->test(21), "<20" );
+ok( !$c->test(20) );
+ok(  $c->test(19) );
+
+$c = Number::Compare->new('>=20');
+ok(  $c->test(21), ">=20" );
+ok(  $c->test(20) );
+ok( !$c->test(19) );
+
+$c = Number::Compare->new('<=20');
+ok( !$c->test(21), "<=20" );
+ok(  $c->test(20) );
+ok(  $c->test(19) );
+
+$c = Number::Compare->new('20');
+ok( !$c->test(21), "== 20" );
+ok(  $c->test(20) );
+ok( !$c->test(19) );
+
+# well that's all the comparisons done, we'll not repeat that for each
+# of the magnitudes though
+
+ok( Number::Compare->new("2K")->test(        2_000), "K" );
+ok( Number::Compare->new("2M")->test(    2_000_000), "M" );
+ok( Number::Compare->new("2G")->test(2_000_000_000), "G" );
+
+ok( Number::Compare->new("2Ki")->test(        2_048), "Ki" );
+ok( Number::Compare->new("2Mi")->test(    2_097_152), "Mi" );
+ok( Number::Compare->new("2Gi")->test(2_147_483_648), "Gi" );
+
