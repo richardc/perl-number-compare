@@ -1,5 +1,5 @@
 use ExtUtils::MakeMaker;
-my $module = 'Compare.pm';
+my $module = 'lib/Number/Compare.pm';
 %depends = ( 'Test::More' => 0 );
 WriteMakefile(NAME         => 'Number::Compare',
               VERSION_FROM => $module,
