@@ -1,0 +1,3 @@
+0.01	23rd October, 2002
+	- Refactored the code away from File::Find::Rule
+	- Initial release
