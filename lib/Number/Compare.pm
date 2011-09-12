@@ -26,7 +26,7 @@ sub parse_to_perl {
 
     my $comparison = $1 || '==';
     my $target     = $2;
-    my $magnitude  = $3;
+    my $magnitude  = $3 || '';
     $target *=           1000 if lc $magnitude eq 'k';
     $target *=           1024 if lc $magnitude eq 'ki';
     $target *=        1000000 if lc $magnitude eq 'm';
