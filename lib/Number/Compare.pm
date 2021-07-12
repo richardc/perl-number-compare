@@ -1,10 +1,11 @@
 package Number::Compare;
 use strict;
 use warnings;
+use 5.006;
 
 use Carp qw(croak);
 
-our $VERSION = '0.04';
+our $VERSION = '0.03';
 
 sub new  {
     my $referent = shift;
@@ -71,7 +72,7 @@ magnitudes.
 
 The target value may use magnitudes of kilobytes (C<k>, C<ki>),
 megabytes (C<m>, C<mi>), gigabytes (C<g>, C<gi>), terabytes (C<t>, C<ti>),
-petabytes (C<p>, C<pi>), and exabytes (C<e>, C<ei>).
+petabytes (C<p>, C<pi>), or exabytes (C<e>, C<ei>).
 Those suffixed with an C<i> use the appropriate 2**n version in accordance with the
 IEC standard: http://physics.nist.gov/cuu/Units/binary.html
 
