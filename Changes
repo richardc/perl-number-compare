@@ -4,6 +4,7 @@ Revision history for Perl module Number::Compare
     - Reformatted as per CPAN::Changes::Spec
     - Added Tera-, Peta-, and Exa- magnitudes. RT#72840
     - Escaped > in pod to be E<gt>
+    - Added "use warnings" and dropped "use vars"
 
 0.03    2011-09-21 RCLAMP
     - Generate a new tarball on linux.  Doing the C<make dist> on OSX 

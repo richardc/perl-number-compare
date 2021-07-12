@@ -1,6 +1,7 @@
 #!perl -w
 # $Id$
 use strict;
+use warnings;
 use Test::More tests => 30;
 
 BEGIN { use_ok("Number::Compare") };
