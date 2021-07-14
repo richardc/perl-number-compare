@@ -1,8 +1,11 @@
 package Number::Compare;
 use strict;
+use warnings;
+use 5.006;
+
 use Carp qw(croak);
-use vars qw/$VERSION/;
-$VERSION = '0.03';
+
+our $VERSION = '0.03';
 
 sub new  {
     my $referent = shift;
@@ -17,21 +20,27 @@ sub parse_to_perl {
     my $test = shift;
 
     $test =~ m{^
-               ([<>]=?)?   # comparison
-               (.*?)       # value
-               ([kmg]i?)?  # magnitude
+               ([<>]=?)?     # comparison
+               (.*?)         # value
+               ([kmgtpe]i?)? # magnitude
               $}ix
        or croak "don't understand '$test' as a test";
 
     my $comparison = $1 || '==';
     my $target     = $2;
     my $magnitude  = $3 || '';
-    $target *=           1000 if lc $magnitude eq 'k';
-    $target *=           1024 if lc $magnitude eq 'ki';
-    $target *=        1000000 if lc $magnitude eq 'm';
-    $target *=      1024*1024 if lc $magnitude eq 'mi';
-    $target *=     1000000000 if lc $magnitude eq 'g';
-    $target *= 1024*1024*1024 if lc $magnitude eq 'gi';
+    $target *=                          1000 if lc $magnitude eq 'k';
+    $target *=                          1024 if lc $magnitude eq 'ki';
+    $target *=                       1000000 if lc $magnitude eq 'm';
+    $target *=                     1024*1024 if lc $magnitude eq 'mi';
+    $target *=                    1000000000 if lc $magnitude eq 'g';
+    $target *=                1024*1024*1024 if lc $magnitude eq 'gi';
+    $target *=                 1000000000000 if lc $magnitude eq 't';
+    $target *=           1024*1024*1024*1024 if lc $magnitude eq 'ti';
+    $target *=              1000000000000000 if lc $magnitude eq 'p';
+    $target *=      1024*1024*1024*1024*1024 if lc $magnitude eq 'pi';
+    $target *=           1000000000000000000 if lc $magnitude eq 'e';
+    $target *= 1024*1024*1024*1024*1024*1024 if lc $magnitude eq 'ei';
 
     return "$comparison $target";
 }
@@ -62,28 +71,29 @@ Now this would be very pointless, if Number::Compare didn't understand
 magnitudes.
 
 The target value may use magnitudes of kilobytes (C<k>, C<ki>),
-megabytes (C<m>, C<mi>), or gigabytes (C<g>, C<gi>).  Those suffixed
-with an C<i> use the appropriate 2**n version in accordance with the
+megabytes (C<m>, C<mi>), gigabytes (C<g>, C<gi>), terabytes (C<t>, C<ti>),
+petabytes (C<p>, C<pi>), or exabytes (C<e>, C<ei>).
+Those suffixed with an C<i> use the appropriate 2**n version in accordance with the
 IEC standard: http://physics.nist.gov/cuu/Units/binary.html
 
 =head1 METHODS
 
-=head2 ->new( $test )
+=head2 -E<gt>new( $test )
 
 Returns a new object that compares the specified test.
 
-=head2 ->test( $value )
+=head2 -E<gt>test( $value )
 
-A longhanded version of $compare->( $value ).  Predates blessed
+A longhanded version of $compare-E<gt>( $value ).  Predates blessed
 subroutine reference implementation.
 
-=head2 ->parse_to_perl( $test )
+=head2 -E<gt>parse_to_perl( $test )
 
 Returns a perl code fragment equivalent to the test.
 
 =head1 AUTHOR
 
-Richard Clamp <richardc@unixbeard.net>
+Richard Clamp E<lt>richardc@unixbeard.netE<gt>
 
 =head1 COPYRIGHT
 
